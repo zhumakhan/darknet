@@ -328,6 +328,14 @@ void cudnn_convolutional_setup(layer *l, int cudnn_preference, size_t workspace_
             //printf(" - cuDNN FWD algo: %d, time = %f ms \n", l->fw_algo, min_time);
         }
     }
+    // l->fw_algo = CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM; //error cuda free
+    // l->fw_algo = CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_PRECOMP_GEMM;
+    // l->fw_algo = CUDNN_CONVOLUTION_FWD_ALGO_GEMM;
+    // l->fw_algo = CUDNN_CONVOLUTION_FWD_ALGO_FFT; //Not Supported;
+    // l->fw_algo = CUDNN_CONVOLUTION_FWD_ALGO_DIRECT; //Not Supported;
+    // l->fw_algo = CUDNN_CONVOLUTION_FWD_ALGO_FFT_TILING;
+    // l->fw_algo = CUDNN_CONVOLUTION_FWD_ALGO_WINOGRAD; //Not Supported;
+    // l->fw_algo = CUDNN_CONVOLUTION_FWD_ALGO_WINOGRAD_NONFUSED;
 
     if (!found_conv_algorithm) {
         printf(" Error: cuDNN isn't found FWD algo for convolution.\n");

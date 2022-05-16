@@ -424,7 +424,7 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
 
     //fill_ongpu(l.outputs*l.batch, 0, l.output_gpu, 1);
 
-#ifdef CUDNN
+#ifdef CUDNN_DISABLED
     //float one = 1;    // alpha[0], beta[0] is float for HALF and FLOAT
     float alpha = 1, beta = 0;
 
@@ -528,6 +528,7 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
         }
     }
     else {
+        printf("\nCUDNN %d,\n",l.fw_algo);
 
         //#else
         /*
@@ -565,7 +566,8 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
     }
 
 
-#else
+#elif GPU
+    printf("\nGEMM\n");
     fill_ongpu(l.outputs*l.batch, 0, l.output_gpu, 1);
 
     int i, j;
