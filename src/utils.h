@@ -11,6 +11,8 @@
 #define M_PI       3.14159265358979323846   // pi
 #endif
 
+#define TIME(...) (clock_t timer = clock(); __VA_ARGS__ timer = clock()-timer; double taken = ((double)timer)/CLOCKS_PER_SEC; printf("\n%lf secs\n", taken);) 
+
 #ifdef __cplusplus
 extern "C" {
 #endif

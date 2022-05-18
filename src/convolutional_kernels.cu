@@ -182,6 +182,7 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
     }
 
     if(l.xnor){
+        printf("Layer XNOR\n");
         if (!l.align_bit_weights_gpu || state.train) {
             //binarize_weights_gpu(l.weights_gpu, l.n, (l.c / l.groups)*l.size*l.size, l.binary_weights_gpu);
 
@@ -570,6 +571,10 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
     printf("\nGEMM\n");
     fill_ongpu(l.outputs*l.batch, 0, l.output_gpu, 1);
 
+    double time_spent;
+    
+    clock_t timer = clock();
+
     int i, j;
     int m = l.n / l.groups;
     int k = l.size*l.size*l.c / l.groups;
@@ -581,13 +586,16 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
             float *a = l.weights_gpu + j*l.nweights / l.groups;
             float *b = state.workspace;
             float *c = l.output_gpu + (i*l.groups + j)*n*m;
+
             if (l.size == 1 && l.stride == 1 && l.dilation == 1) {
                 b = im;
             }
             else {
+    time_spent = (double)(clock()-timer)/(CLOCKS_PER_SEC/1000);
+    printf("before im2col %lf\n", time_spent);
+    timer = clock();
                 //im2col_ongpu(im, l.c / l.groups, l.h, l.w, l.size, l.stride, l.pad, state.workspace);
-
-                im2col_gpu_ext(im,          // input
+            im2col_gpu_ext(im,          // input
                     l.c / l.groups,         // input channels
                     l.h, l.w,               // input size (h, w)
                     l.size, l.size,         // kernel size (h, w)
@@ -595,8 +603,11 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
                     l.stride_y, l.stride_x,     // stride (h, w)
                     l.dilation, l.dilation, // dilation (h, w)
                     state.workspace);       // output
+    time_spent = (double)(clock()-timer)/(CLOCKS_PER_SEC/1000);
+    printf("im2col %lf\n", time_spent);
 
             }
+
             //gemm_ongpu(0, 0, m, n, k, 1., a, k, b, n, 1., c + i*m*n, n);
             gemm_ongpu(0, 0, m, n, k, 1, a, k, b, n, 1, c, n);
         }

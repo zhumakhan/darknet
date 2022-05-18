@@ -2677,11 +2677,18 @@ void gemm_ongpu(int TA, int TB, int M, int N, int K, float ALPHA,
         float BETA,
         float *C_gpu, int ldc)
 {
+    clock_t timer = clock();
+    double time_spent;
     cublasHandle_t handle = blas_handle();
     cudaError_t stream_status = (cudaError_t)cublasSetStream(handle, get_cuda_stream());
     CHECK_CUDA(stream_status);
+    time_spent = (double)(clock()-timer)/(CLOCKS_PER_SEC/1000);
+    printf("cublas stream %lf\n", time_spent);
+    timer = clock();
     cudaError_t status = (cudaError_t)cublasSgemm(handle, (TB ? CUBLAS_OP_T : CUBLAS_OP_N),
             (TA ? CUBLAS_OP_T : CUBLAS_OP_N), N, M, K, &ALPHA, B_gpu, ldb, A_gpu, lda, &BETA, C_gpu, ldc);
+    time_spent = (double)(clock()-timer)/(CLOCKS_PER_SEC/1000);
+    printf("sublasSgemm %lf\n",time_spent);
     CHECK_CUDA(status);
 }
 

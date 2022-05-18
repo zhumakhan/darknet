@@ -21,6 +21,7 @@
 #endif
 
 
+
 #ifndef USE_CMAKE_LIBS
 #pragma warning(disable: 4996)
 #endif
@@ -1068,3 +1069,5 @@ bool is_live_stream(const char * path){
     const char *url_schema = "://";
     return (NULL != strstr(path, url_schema));
 }
+
+
