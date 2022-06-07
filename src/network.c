@@ -270,15 +270,16 @@ void forward_network(network net, network_state state)
 {
     state.workspace = net.workspace;
     int i;
+    // FILE *file = fopen("results.txt","a");
     for(i = 0; i < net.n; ++i){
         state.index = i;
         layer l = net.layers[i];
         if(l.delta && state.train && l.train){
             scal_cpu(l.outputs * l.batch, 0, l.delta, 1);
         }
-        //double time = get_time_point();
+        // double time = get_time_point();
         l.forward(l, state);
-        //printf("%d - Predicted in %lf milli-seconds.\n", i, ((double)get_time_point() - time) / 1000);
+        // if(l.type == CONVOLUTIONAL)fprintf(file,"%d - Predicted in %lf milli-seconds.\n", i, ((double)get_time_point() - time) / 1000);
         state.input = l.output;
 
         /*
@@ -288,6 +289,7 @@ void forward_network(network net, network_state state)
         printf(" i: %d - avg_val = %f \n", i, avg_val / l.outputs);
         */
     }
+    // fclose(file);
 }
 
 void update_network(network net)

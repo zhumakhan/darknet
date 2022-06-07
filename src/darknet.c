@@ -91,7 +91,8 @@ void average(int argc, char *argv[])
 void speed(char *cfgfile, int tics)
 {
     if (tics == 0) tics = 1000;
-    network net = parse_network_cfg(cfgfile);
+    network net = parse_network_cfg(cfgfile);\
+    net.benchmark_layers = true;
     set_batch_network(&net, 1);
     int i;
     time_t start = time(0);

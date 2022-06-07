@@ -568,12 +568,12 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
 
 
 #elif GPU
-    printf("\nGEMM\n");
+    // printf("\nGEMM\n");
     fill_ongpu(l.outputs*l.batch, 0, l.output_gpu, 1);
 
-    double time_spent;
+    // double time_spent;
     
-    clock_t timer = clock();
+    // clock_t timer = clock();
 
     int i, j;
     int m = l.n / l.groups;
@@ -591,9 +591,9 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
                 b = im;
             }
             else {
-    time_spent = (double)(clock()-timer)/(CLOCKS_PER_SEC/1000);
-    printf("before im2col %lf\n", time_spent);
-    timer = clock();
+    // time_spent = (double)(clock()-timer)/(CLOCKS_PER_SEC/1000);
+    // printf("before im2col %lf\n", time_spent);
+    // timer = clock();
                 //im2col_ongpu(im, l.c / l.groups, l.h, l.w, l.size, l.stride, l.pad, state.workspace);
             im2col_gpu_ext(im,          // input
                     l.c / l.groups,         // input channels
@@ -603,8 +603,8 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
                     l.stride_y, l.stride_x,     // stride (h, w)
                     l.dilation, l.dilation, // dilation (h, w)
                     state.workspace);       // output
-    time_spent = (double)(clock()-timer)/(CLOCKS_PER_SEC/1000);
-    printf("im2col %lf\n", time_spent);
+    // time_spent = (double)(clock()-timer)/(CLOCKS_PER_SEC/1000);
+    // printf("im2col %lf\n", time_spent);
 
             }
 

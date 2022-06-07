@@ -87,18 +87,18 @@ void forward_network_gpu(network net, network_state state)
             start_time = get_time_point();
         }
 
-        // int conv_layer_id = 36;
+        int conv_layer_id = 36;
 
 
-        if(l.type == CONVOLUTIONAL){
-            cudaProfilerStart();
+        if(l.type == CONVOLUTIONAL and i == conv_layer_id){
+            // cudaProfilerStart();
             l.forward_gpu(l, state);
-            cudaProfilerStop();
+            // cudaProfilerStop();
         }else{
             l.forward_gpu(l, state);
         }
 
-        if (net.benchmark_layers and l.type == CONVOLUTIONAL) {
+        if (net.benchmark_layers and l.type == CONVOLUTIONAL and i == conv_layer_id) {
             CHECK_CUDA(cudaDeviceSynchronize());
             end_time = get_time_point();
             const double took_time = (end_time - start_time) / 1000;

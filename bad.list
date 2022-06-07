@@ -5,3 +5,4 @@ test8.jpg
 test8.jpg
 test3.jpg
 data/dog
+./cfg/yolov4-tiny.cfg
