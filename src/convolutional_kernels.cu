@@ -425,7 +425,7 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
 
     //fill_ongpu(l.outputs*l.batch, 0, l.output_gpu, 1);
 
-#ifdef CUDNN_DISABLED
+#ifdef CUDNN
     //float one = 1;    // alpha[0], beta[0] is float for HALF and FLOAT
     float alpha = 1, beta = 0;
 
@@ -567,7 +567,7 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
     }
 
 
-#elif GPU
+#elif GPU //cublas
     // printf("\nGEMM\n");
     fill_ongpu(l.outputs*l.batch, 0, l.output_gpu, 1);
 
