@@ -1,40 +1,14 @@
-==211228== NVPROF is profiling process 211228, command: ./darknet detect cfg/yolov4-tiny.cfg yolov4-tiny.weights dog.jpg
-==211228== Warning: Profiling results might be incorrect with current version of nvcc compiler used to compile cuda app. Compile with nvcc compiler 9.0 or later version to get correct profiling results. Ignore this warning if code is already compiled with the recommended nvcc version 
-==211228== Profiling application: ./darknet detect cfg/yolov4-tiny.cfg yolov4-tiny.weights dog.jpg
-==211228== Profiling result:
+==22076== NVPROF is profiling process 22076, command: ./cudnn detect cfg/yolov4-tiny.cfg yolov4-tiny.weights dog.jpg
+==22076== Warning: Profiling results might be incorrect with current version of nvcc compiler used to compile cuda app. Compile with nvcc compiler 9.0 or later version to get correct profiling results. Ignore this warning if code is already compiled with the recommended nvcc version 
+==22076== Profiling application: ./cudnn detect cfg/yolov4-tiny.cfg yolov4-tiny.weights dog.jpg
+==22076== Profiling result:
             Type  Time(%)      Time     Calls       Avg       Min       Max  Name
- GPU activities:   35.60%  2.4948ms         7  356.40us  98.275us  830.55us  maxwell_scudnn_winograd_128x128_ldg1_ldg4_mobile_relu_tile148t_nt_v0
-                   10.61%  743.47us        21  35.403us  4.5760us  154.15us  add_bias_kernel(float*, float*, int, int, int, int)
-                   10.33%  724.02us         5  144.80us  94.627us  319.27us  maxwell_scudnn_winograd_128x128_ldg1_ldg4_relu_tile148n_nt_v1
-                    8.95%  627.12us         7  89.588us  4.5120us  281.96us  void cudnn::winograd::generateWinogradTilesKernel<int=1, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)
-                    7.59%  531.76us        19  27.987us  2.9760us  121.92us  activate_array_leaky_kernel(float*, int)
-                    6.20%  434.22us        20  21.711us  4.3530us  64.418us  simple_copy_kernel(int, float*, float*)
-                    5.67%  397.23us         6  66.204us  37.025us  86.115us  maxwell_sgemm_64x64_nn
-                    3.83%  268.04us         1  268.04us  268.04us  268.04us  maxwell_scudnn_128x64_relu_large_nn_v1
-                    2.98%  209.03us         2  104.52us  14.849us  194.18us  [CUDA memcpy DtoH]
-                    2.79%  195.17us         3  65.057us  32.609us  106.63us  forward_maxpool_layer_kernel(int, int, int, int, int, int, int, int, float*, float*, int*)
-                    1.91%  133.73us         1  133.73us  133.73us  133.73us  maxwell_scudnn_128x32_relu_small_nn_v1
-                    1.12%  78.242us         1  78.242us  78.242us  78.242us  void precomputed_convolve_sgemm<float, int=1024, int=5, int=5, int=4, int=3, int=3, int=1, bool=0>(int, int, int, float const *, int, float*, float const *, kernel_conv_params, __int64, int, float, float, int, bool, float const *, float const *, int*)
-                    1.02%  71.329us         5  14.265us  5.9520us  20.929us  void cudnn::winograd::generateWinogradTilesKernel<int=0, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)
-                    0.58%  40.862us        12  3.4050us  1.7600us  7.1680us  activate_array_logistic_kernel(float*, int)
-                    0.35%  24.512us         1  24.512us  24.512us  24.512us  upsample_kernel(unsigned long, float*, int, int, int, int, int, int, float, float*)
-                    0.17%  11.872us         2  5.9360us  3.0720us  8.8000us  void cask_cudnn::computeOffsetsKernel<bool=0, bool=0>(cask_cudnn::ComputeOffsetsParams)
-                    0.16%  11.423us         6  1.9030us  1.6640us  2.2080us  scal_add_kernel(int, float, float, float*, int)
-                    0.09%  5.9840us         1  5.9840us  5.9840us  5.9840us  fill_kernel(int, float, float*, int)
-                    0.07%  4.5760us         1  4.5760us  4.5760us  4.5760us  void cudnn::cnn::kern_precompute_indices<bool=0>(int*, int, int, int, int, int)
-      API calls:   99.50%  895.93ms       119  7.5288ms  4.6420us  893.97ms  cudaLaunchKernel
-                    0.40%  3.6366ms         1  3.6366ms  3.6366ms  3.6366ms  cudaDeviceSynchronize
-                    0.02%  196.95us        98  2.0090us     163ns  91.447us  cuDeviceGetAttribute
-                    0.02%  152.79us       377     405ns     200ns  3.0030us  cuGetProcAddress
-                    0.02%  135.79us       106  1.2810us     394ns  6.2440us  cudaGetDevice
-                    0.01%  98.227us        36  2.7280us     399ns  29.176us  cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags
-                    0.01%  84.236us       213     395ns     120ns  8.6790us  cudaGetLastError
-                    0.01%  82.607us         1  82.607us  82.607us  82.607us  cuDeviceGetName
-                    0.01%  73.442us         2  36.721us  21.184us  52.258us  cudaMemcpyAsync
-                    0.00%  28.141us        85     331ns     135ns  1.0490us  cudaPeekAtLastError
-                    0.00%  4.1500us         1  4.1500us  4.1500us  4.1500us  cuInit
-                    0.00%  3.4980us         2  1.7490us     555ns  2.9430us  cuDeviceGetCount
-                    0.00%  1.3820us         1  1.3820us  1.3820us  1.3820us  cuDeviceTotalMem
-                    0.00%     546ns         1     546ns     546ns     546ns  cuDeviceGetUuid
-                    0.00%     462ns         1     462ns     462ns     462ns  cuDeviceGet
-                    0.00%     237ns         1     237ns     237ns     237ns  cuDriverGetVersion
+ GPU activities:   66.10%  271.37us         1  271.37us  271.37us  271.37us  maxwell_scudnn_winograd_128x128_ldg1_ldg4_mobile_relu_tile148t_nt_v0
+                   17.23%  70.722us         1  70.722us  70.722us  70.722us  add_bias_kernel(float*, float*, int, int, int, int)
+                   14.60%  59.938us         1  59.938us  59.938us  59.938us  activate_array_leaky_kernel(float*, int)
+                    2.07%  8.5120us         1  8.5120us  8.5120us  8.5120us  void cudnn::winograd::generateWinogradTilesKernel<int=1, float, float>(cudnn::winograd::GenerateWinogradTilesParams<float, float>)
+      API calls:   84.81%  37.889us         4  9.4720us  5.3270us  19.236us  cudaLaunchKernel
+                    6.81%  3.0420us         3  1.0140us     483ns  1.6730us  cudaGetDevice
+                    3.66%  1.6340us         1  1.6340us  1.6340us  1.6340us  cuDeviceGetCount
+                    3.66%  1.6330us         6     272ns     152ns     410ns  cudaGetLastError
+                    1.07%     476ns         2     238ns     219ns     257ns  cudaPeekAtLastError

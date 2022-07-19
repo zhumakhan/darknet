@@ -19,6 +19,14 @@ extern "C" {
 
 #define DARKNET_LOC __FILE__, __func__, __LINE__
 
+
+typedef struct time_benchmark_layers {
+    float time;
+    int layer_id, layer_type, count;
+} time_benchmark_layers;
+
+extern time_benchmark_layers *avg_time_per_layer;
+
 LIB_API void free_ptrs(void **ptrs, int n);
 LIB_API void top_k(float *a, int n, int k, int *index);
 

@@ -529,7 +529,7 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
         }
     }
     else {
-        printf("\nCUDNN %d,\n",l.fw_algo);
+        // printf("\nCUDNN %d,\n",l.fw_algo);
 
         //#else
         /*
